@@ -1,0 +1,30 @@
+/* Variant            1-device    2-orientation   3-space   4-fontsize */
+
+$mobile_portrait:     mobile      portrait        12        200%;
+$mobile_landscape:    mobile      landscape       12        200%;
+$tablet_portrait:     tablet      portrait        12        200%;
+$tablet_landscape:    tablet      landscape       12        200%;
+$browser_portrait:    browser     portrait        8         120%;
+$browser_landscape:   browser     landscape       8         120%;
+
+$variants: $mobile_portrait
+           $mobile_landscape
+           $tablet_portrait
+           $tablet_landscape
+           $browser_portrait
+           $browser_landscape;           
+
+#PlaymotivPlayerHost {  
+
+  @include absolutebox();
+}
+
+@for $variant from 1 through length($variants) { 
+
+  $fontsize: #{nth(nth($variants, $variant), 4)};
+  $space: number(#{nth(nth($variants, $variant), 3)}) * 1px;
+  
+  #PlaymotivPlayerHost
+  .Player.#{nth(nth($variants, $variant), 1)}.#{nth(nth($variants, $variant), 2)} {
+  }
+}
