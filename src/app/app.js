@@ -6,6 +6,7 @@ import { debounce } from 'lodash'
 import { Provider } from 'react-redux'
 import store from './redux/store'
 import * as Actions from './redux/actions'
+import Crop from './components/crop'
 
 const App = props => {
 
@@ -23,7 +24,7 @@ const App = props => {
   }, [])
   
   return <Provider store={ store }>
-    MICROCOSMOS
+    <Crop />
   </Provider> 
 }
 

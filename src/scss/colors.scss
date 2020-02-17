@@ -1,22 +1,3 @@
 
 
-$color-playmotiv-green: #35997f;
-$color-playmotiv-grey: rgb(222, 222, 222);
-$color-playmotiv-green-light: lighten($color-playmotiv-green, 55%);
-$color-playmotiv-green-dark: darken($color-playmotiv-green, 20%);
-$color-border: $color-playmotiv-green;
-$color-border-grey: $color-playmotiv-grey;
-$color-icon: $color-playmotiv-green;
-$color-shadows:$color-playmotiv-green-dark;
-$color-text-body: #000000;
-$color-text-body-light: #ffffff;
-$color-card-cover-icon: $color-playmotiv-green;
-$color-card-avatar: $color-playmotiv-green;
-
-$color-stats-position:  #005bd3;
-$color-stats-points:  #d39b00;
-$color-stats-account:  #00aa47;
-
-
-$color-tendency-up:  #00c000;
-$color-tendency-down:  #aa2800;
+$color-controls-background: rgba(0, 0, 0, 0.5);

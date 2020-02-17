@@ -1,108 +1,113 @@
+// https://codesandbox.io/s/q8q1mnr01w
+
 import React, { 
   useState, 
   useCallback
 } from 'react'
-import ReactDOM from 'react-dom'
+import Cropper from 'react-easy-crop'
 import {
   Slider,
   Button
 } from 'antd'
 // import ImgDialog from './imgdialog'
-// import getCroppedImg from './cropImage'
-import { styles } from './styles'
+import getCroppedImg from './cropImage'
 
-const dogImg =
-  'https://img.huffingtonpost.com/asset/5ab4d4ac2000007d06eb2c56.jpeg?cache=sih0jwle4e&ops=1910_1000'
+const caraimg = 'caras/microcosmos_12.jpeg'
 
-const Demo = ({ classes }) => {
+const Crop = props => {
 
   const [crop, setCrop] = useState({ x: 0, y: 0 })
   const [rotation, setRotation] = useState(0)
   const [zoom, setZoom] = useState(1)
+  const [aspect, setAspect] = useState(1)
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null)
   const [croppedImage, setCroppedImage] = useState(null)
 
   const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
+
     setCroppedAreaPixels(croppedAreaPixels)
   }, [])
 
   const showCroppedImage = useCallback(async () => {
+
     try {
+
       const croppedImage = await getCroppedImg(
-        dogImg,
+        caraimg,
         croppedAreaPixels,
         rotation
       )
       console.log('donee', { croppedImage })
       setCroppedImage(croppedImage)
     } catch (e) {
+
       console.error(e)
     }
+
   }, [croppedAreaPixels, rotation])
 
   const onClose = useCallback(() => {
+
     setCroppedImage(null)
+
   }, [])
 
-  return (
-    <div>
-      <div className={classes.cropContainer}>
-        <Cropper
-          image={dogImg}
-          crop={crop}
-          rotation={rotation}
-          zoom={zoom}
-          aspect={4 / 3}
-          onCropChange={setCrop}
-          onRotationChange={setRotation}
-          onCropComplete={onCropComplete}
-          onZoomChange={setZoom}
+  const changeAspect = () => setAspect(
+    Math.round(Math.random() * 100)
+    /
+    Math.round(Math.random() * 100)
+  )
+
+  return  <div className="Crop">
+    <div className={`
+      Cropper
+    `}>
+      <Cropper
+        image={ caraimg }
+        crop={ crop }
+        rotation={ rotation }
+        zoom={ zoom }
+        maxZoom={ 10 }
+        aspect={ aspect }
+        showGrid={ false }
+        onCropChange={ setCrop }
+        onRotationChange={ setRotation }
+        onCropComplete={ onCropComplete }
+        onZoomChange={ setZoom }
+      />
+    </div>
+    <div className={`
+      Controls
+    `}>
+      <div className={`
+        Slider Zoom
+      `}>
+        <Slider
+          value={ zoom }
+          min={ 1 }
+          max={ 10 }
+          step={ 0.1 }
+          onChange={ zoom => setZoom(zoom)}
         />
       </div>
-      <div className={classes.controls}>
-        <div className={classes.sliderContainer}>
-          <Slider
-            value={zoom}
-            min={1}
-            max={3}
-            step={0.1}
-            aria-labelledby="Zoom"
-            classes={{ container: classes.slider }}
-            onChange={(e, zoom) => setZoom(zoom)}
-          />
-        </div>
-        <div className={classes.sliderContainer}>
-          <Typography
-            variant="overline"
-            classes={{ root: classes.sliderLabel }}
-          >
-            Rotation
-          </Typography>
-          <Slider
-            value={rotation}
-            min={0}
-            max={360}
-            step={1}
-            aria-labelledby="Rotation"
-            classes={{ container: classes.slider }}
-            onChange={(e, rotation) => setRotation(rotation)}
-          />
-        </div>
-        <Button
-          onClick={showCroppedImage}
-          variant="contained"
-          color="primary"
-          classes={{ root: classes.cropButton }}
-        >
-          Show Result
-        </Button>
+      <div className={`
+        Slider Rotation
+      `}>
+        <Slider
+          value={rotation}
+          min={ -360 }
+          max={ 360 }
+          step={ 1 }
+          onChange={ rotation => setRotation(rotation)}
+        />
       </div>
-      <ImgDialog img={croppedImage} onClose={onClose} />
+      <Button
+        onClick={changeAspect}
+      >
+        Change aspect
+      </Button>
     </div>
-  )
+  </div>
 }
 
-const StyledDemo = withStyles(styles)(Demo)
-
-const rootElement = document.getElementById('root')
-ReactDOM.render(<StyledDemo />, rootElement)
+export default Crop
