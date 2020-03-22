@@ -1,7 +1,6 @@
-@import "scss/colors";
+@import "scss/variables";
+@import "scss/mixin";
 @import "scss/fonts";
-@import "scss/utils";
-@import "scss/mixins";
-@import "scss/variations";
 @import "scss/common";
 @import "scss/crop";
+@import "scss/ambient";

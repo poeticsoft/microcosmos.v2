@@ -1,5 +1,5 @@
 import immutableUpdate from 'immutable-update'
-import * as actions from './actions'
+import * as Actions from './Actions'
 import {
   isBrowser,
   isTablet,
@@ -7,10 +7,6 @@ import {
 } from 'react-device-detect'
 
 const initialState = {
-  message: {
-    type: 'info', // info, error, warn
-    text: ''
-  },
   responsive: {
     window: {},
     device: ''
@@ -19,7 +15,7 @@ const initialState = {
 
 const reducers = {  
 
-  [actions.UI_SET_RESPONSIVE_WINDOW]: (state, action) => immutableUpdate(
+  [Actions.UI_SET_RESPONSIVE_WINDOW]: (state, action) => immutableUpdate(
     state,
     {
       responsive: {
@@ -32,7 +28,7 @@ const reducers = {
     }
   ),
 
-  [actions.UI_SET_RESPONSIVE_DEVICE]: (state, action) => {
+  [Actions.UI_SET_RESPONSIVE_DEVICE]: (state, action) => {
 
     let device = []
     isBrowser && device.push('browser')

@@ -7,6 +7,7 @@ import { Provider } from 'react-redux'
 import store from './redux/store'
 import * as Actions from './redux/actions'
 import Crop from './components/crop'
+import Ambients from './components/ambients'
 
 const App = props => {
 
@@ -20,11 +21,17 @@ const App = props => {
     store.dispatch(Actions.uiSetResponsiveWindow())
     store.dispatch(Actions.uiSetResponsiveDevice())
 
+    store.dispatch(Actions.uiMessage({
+      type: 'success',
+      text: 'Message'
+    }))
+
     return () => window.removeEventListener('resize', null)
   }, [])
   
   return <Provider store={ store }>
     <Crop />
+    <Ambients />
   </Provider> 
 }
 

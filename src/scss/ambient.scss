@@ -1,0 +1,47 @@
+.Ambients {
+
+  $mult: 10;
+
+  .Ambient {
+
+    @include absolutebox();
+    background-color: rgb(204, 0, 194);
+
+    .Crop,
+    .Space {
+      
+      @include absolutebox();
+    }
+
+    .Space {
+      
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;   
+    }
+  }
+
+  .Selectors {
+
+    position: absolute;
+    top: $space * $mult / 2;
+    left: $space;
+
+    .Selector {
+
+      width: $space * $mult;
+      height: $space * $mult;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;     
+      margin: 0 0 $space 0; 
+      background-color:rgb(204, 0, 194);
+      cursor: pointer;
+
+      &.selected {
+
+        border: solid 4px rgb(204, 0, 194);
+      }
+    }
+  }
+}

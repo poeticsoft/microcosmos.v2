@@ -1,6 +1,6 @@
 module.exports = {
-  env: 'prod',
+  env: 'dev',
   name: 'microcosmos',
-  lessfile: 'E:\\virtualbox\\crop\\src\\less\\antd.less',
-  outputpath: 'E:\\virtualbox\\web\\html\\microcosmos\\'
+  lessfile: 'C:\\trabajo\\pere\\microcosmos.v2\\src\\less\\antd.less',
+  outputpath: 'C:\\trabajo\\pere\\virtualbox\\web\\html\\microcosmos\\'
 }

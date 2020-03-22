@@ -4,6 +4,8 @@ const LiveReloadPlugin = require('webpack-livereload-plugin');
 const PolyfillInjectorPlugin = require('webpack-polyfill-injector');
 const config = require('./config')
 
+console.log(config)
+
 module.exports = () => ({
   context: __dirname,
   mode: config.env == 'prod' ? 'production' : 'development',
