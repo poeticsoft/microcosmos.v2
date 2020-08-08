@@ -50,6 +50,7 @@ const Ambient = props => {
 const Ambients = props => {  
 
   const [ selected, setSelected ] = useState()
+  const [ ambient, setAmbient ] = useState()
 
   const select = id => {
 
@@ -58,7 +59,7 @@ const Ambients = props => {
   
   return <div className="Ambients">
     {
-      selected ?
+      ambient ?
         <Ambient ambient={ selected } />
         :
         <></>
@@ -71,6 +72,7 @@ const Ambients = props => {
           id={ key }
           selected={ selected == key }
           setSelected={ select }
+          setAmbient={ setAmbient }
           { ...ambientList[key] }  
         />)
       }
