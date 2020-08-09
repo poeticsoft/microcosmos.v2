@@ -1,79 +1,81 @@
 // https://codesandbox.io/s/q8q1mnr01w
 
-import React, { 
-  useState, 
-  useCallback
+import React, {
+  useEffect
 } from 'react'
+import { connect } from 'react-redux'
 import Cropper from 'react-easy-crop'
 import {
   Slider,
   Button
 } from 'antd'
-// import ImgDialog from './imgdialog'
-import getCroppedImg from './cropImage'
+import * as Actions from 'app/redux/actions'
 
-const caraimg = 'caras/microcosmos_12.jpeg'
+const Crop = connect(state => ({
+  cara: state.ui.cara,
+  crop: state.ui.crop
+}))(props => {
 
-const Crop = props => {
+  const setCrop = crop => {
+    
+    props.dispatch(
+      Actions.uiSetCrop({
+        crop: crop
+      })
+    )
+    
+    props.dispatch(Actions.uiSetSnap())
+  }
 
-  const [crop, setCrop] = useState({ x: 0, y: 0 })
-  const [rotation, setRotation] = useState(0)
-  const [zoom, setZoom] = useState(1)
-  const [aspect, setAspect] = useState(1)
-  const [croppedAreaPixels, setCroppedAreaPixels] = useState(null)
-  const [croppedImage, setCroppedImage] = useState(null)
-
-  const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
-
-    setCroppedAreaPixels(croppedAreaPixels)
-  }, [])
-
-  const showCroppedImage = useCallback(async () => {
-
-    try {
-
-      const croppedImage = await getCroppedImg(
-        caraimg,
-        croppedAreaPixels,
-        rotation
-      )
-      console.log('donee', { croppedImage })
-      setCroppedImage(croppedImage)
-    } catch (e) {
-
-      console.error(e)
-    }
-
-  }, [croppedAreaPixels, rotation])
-
-  const onClose = useCallback(() => {
-
-    setCroppedImage(null)
-
-  }, [])
-
-  const changeAspect = () => setAspect(
-    Math.round(Math.random() * 100)
-    /
-    Math.round(Math.random() * 100)
+  const onCropComplete = (croppedArea, croppedAreaPixels) => props.dispatch(
+    Actions.uiSetCrop({
+      croppedArea: croppedArea,
+      croppedAreaPixels: croppedAreaPixels
+    })
   )
+
+  const setZoom = zoom => props.dispatch(
+    Actions.uiSetCrop({
+      zoom: zoom
+    })
+  ) 
+
+  const setRotation = rotation => props.dispatch(
+    Actions.uiSetCrop({
+      rotation: rotation
+    })
+  ) 
+
+  const setAspect = () => props.dispatch(
+    Actions.uiSetCrop({
+      aspect: Math.round(Math.random() * 100)
+              /
+              Math.round(Math.random() * 100)
+    })
+  )
+
+  useEffect(() => {
+
+    props.dispatch(Actions.uiSetSnap())
+    
+  }, [])
 
   return  <div className="Crop">
     <div className={`
       Cropper
     `}>
       <Cropper
-        image={ caraimg }
-        crop={ crop }
-        rotation={ rotation }
-        zoom={ zoom }
-        maxZoom={ 10 }
-        aspect={ aspect }
-        showGrid={ false }
+        image={ props.cara }
+        crop={ props.crop.crop }
         onCropChange={ setCrop }
+        rotation={ props.crop.rotation }
         onRotationChange={ setRotation }
-        onCropComplete={ onCropComplete }
+        zoom={ props.crop.zoom }
         onZoomChange={ setZoom }
+        maxZoom={ 10 }
+        aspect={ props.crop.aspect }
+        onCropComplete={ onCropComplete }
+        showGrid={ false }
       />
     </div>
     <div className={`
@@ -83,31 +85,36 @@ const Crop = props => {
         Slider Zoom
       `}>
         <Slider
-          value={ zoom }
+          value={ props.crop.zoom }
           min={ 1 }
           max={ 10 }
           step={ 0.1 }
-          onChange={ zoom => setZoom(zoom)}
+          onChange={ setZoom }
         />
       </div>
       <div className={`
         Slider Rotation
       `}>
         <Slider
-          value={rotation}
+          value={ props.crop.rotation }
           min={ -360 }
           max={ 360 }
           step={ 1 }
-          onChange={ rotation => setRotation(rotation)}
+          onChange={ setRotation }
         />
       </div>
       <Button
-        onClick={changeAspect}
+        onClick={ setAspect }
       >
         Change aspect
       </Button>
+      <Button
+        onClick={ e => props.dispatch(Actions.uiSetSnap()) }
+      >
+        Snap
+      </Button>
     </div>
   </div>
-}
+})
 
 export default Crop

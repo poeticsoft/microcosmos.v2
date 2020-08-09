@@ -7,7 +7,7 @@ import { Provider } from 'react-redux'
 import store from './redux/store'
 import * as Actions from './redux/actions'
 import Crop from './components/crop'
-import Ambients from './components/ambients'
+import AmbientViewer from './components/ambientviewer'
 
 const App = props => {
 
@@ -31,7 +31,7 @@ const App = props => {
   
   return <Provider store={ store }>
     <Crop />
-    <Ambients />
+    <AmbientViewer />
   </Provider> 
 }
 

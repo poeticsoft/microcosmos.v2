@@ -20,4 +20,5 @@ body * {
 #Microcosmos {
 
   @include absolutebox();
+  perspective: 800px;
 }

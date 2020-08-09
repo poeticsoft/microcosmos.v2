@@ -1,8 +1,8 @@
 import "regenerator-runtime/runtime"
 import React from 'react'
 import ReactDOM from 'react-dom'
-import 'antd/dist/antd.less'
 import App from './app/app'
+import 'antd/dist/antd.css'
 
 const render = () => ReactDOM.render(
   <App />, 

@@ -44,22 +44,19 @@ module.exports = () => ({
       {
         test: /\.less$/,
         use: [
-          { 
-            loader: MiniCssExtractPlugin.loader
-          },
+          { loader: 'style-loader' },
+          { loader: 'css-loader' },
           {
-            loader: 'css-loader'
-          },
-          { 
-            loader: 'less-loader',
-            options: {       
-              modifyVars: {
-                'hack': `
-                  true; 
-                  @import '${ config.lessfile }';
-                `,
-              },         
-              javascriptEnabled: true
+            loader: 'less-loader', 
+            options: {
+              lessOptions: { 
+                modifyVars: {
+                  'primary-color': '#008f36',
+                  'link-color': '#008f36',
+                  'border-radius-base': '0'
+                },
+                javascriptEnabled: true,
+              }
             }
           }
         ]
@@ -141,7 +138,7 @@ module.exports = () => ({
       '../node_modules'
     ],
     alias: {
-      ['~']: path.resolve(__dirname + '/src')
+      ['app']: path.resolve(__dirname + '/src/app')
     },
     extensions: ['.js']
   }

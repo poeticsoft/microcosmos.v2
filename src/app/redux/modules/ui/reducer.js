@@ -1,5 +1,5 @@
 import immutableUpdate from 'immutable-update'
-import * as Actions from './Actions'
+import * as Actions from './actions'
 import {
   isBrowser,
   isTablet,
@@ -10,6 +10,29 @@ const initialState = {
   responsive: {
     window: {},
     device: ''
+  },
+  cara: 'caras/microcosmos_12.jpeg',
+  crop: {
+    crop: { x: 0, y: 0 },
+    aspect: 1,
+    rotation: 0,
+    zoom: 1,
+    croppedArea: null,
+    croppedAreaPixels: {
+      x: 0,
+      y: 0,
+      width: 0,
+      height: 0
+    }
+  },
+  snap: {
+    rotation: 0,
+    croppedAreaPixels: {
+      x: 0,
+      y: 0,
+      width: 0,
+      height: 0
+    }
   }
 } 
 
@@ -45,6 +68,29 @@ const reducers = {
       }
     )
   },
+
+  [Actions.UI_SET_CROP]: (state, action) => {
+    
+    return immutableUpdate(
+      state,
+      {
+        crop: action.payload.data
+      }
+    )
+  },
+
+  [Actions.UI_SET_SNAP]: (state, action) => {
+    
+    return immutableUpdate(
+      state,
+      {
+        snap: {
+          rotation: state.crop.rotation,
+          croppedAreaPixels: state.crop.croppedAreaPixels
+        }
+      }
+    )
+  }
 } 
 
 const reducer = (state = initialState, action) => reducers[action.type] ? 
